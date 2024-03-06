@@ -3,18 +3,12 @@ import ContactList from './ContactList/ContactList';
 import SearchBox from './SearchBox/SearchBox';
 import ContactForm from './ContactForm/ContactForm';
 import Notification from './Notification/Notification';
+import { selectIsFilter, selectIsContact } from '../redux/selectors.js';
 import './App.css';
 
 function App() {
-  const contacts = useSelector(state => state.contacts.items);
-  const inputValue = useSelector(state => state.filters.name);
-
-  const contactsFilter = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(inputValue.toLowerCase())
-  );
-
-  const isContact = contacts.length !== 0;
-  const isFilter = contactsFilter.length !== 0;
+  const isContact = useSelector(selectIsContact);
+  const isFilter = useSelector(selectIsFilter);
 
   return (
     <>
@@ -25,7 +19,7 @@ function App() {
 
         {isContact ? (
           isFilter ? (
-            <ContactList ContactsList={contactsFilter} />
+            <ContactList />
           ) : (
             <Notification type={'isFilter'} />
           )
